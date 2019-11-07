@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Loddtrekning</title>
+        <link rel="stylesheet" href="style.css" type="text/css" />
+        <script type="text/javascript" src="script.js"></script>
+    </head>
+    <body>
+        <div class="title">
+            <h1>Trekning!</h1>
+        </div>
+        <div class="wrapper">
+            <div class="wrapper-inner">
+                <div id="divNames">
+                    <h2>Deltakere</h2>
+                    <textarea style="height: 300px; width: 400px; text-align: left; font-size: 14pt;" id="cbxNames">one
+two
+three</textarea>
+                    <br/>
+                    <button onclick="randomNamePicker.hideNames()">Klar</button>
+                </div>
+                <br />
+                <div id="divTrekning" style="display: none;">
+                    <h2></h2>
+                    <button id="btnStart" onclick="randomNamePicker.startShuffle()">Start!</button>
+                    <div id="divWinner" style="visibility: hidden;">
+                        Vinneren er
+                    </div>
+                    <div id="divWinnerName"></div>
+                    <br/><br/><br/>
+                    <!-- a href="#" onclick="randomNamePicker.showNames(); return false;" style="color: green; text-decoration: none; padding: 20px;">X</a -->
+                    <br/><br/>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
