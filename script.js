@@ -9,7 +9,7 @@
     winnerTitle: null,
   }
 
-  const isEmpty = val => val !== '' && val !== null && val !== void 0
+  const isEmpty = val => val === '' || val === null || val === void 0
 
   const shuffleNames = () => {
     const names = elements.nameTextArea.value.split('\n').filter(n => !isEmpty(n))
