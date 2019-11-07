@@ -1,58 +1,77 @@
+(function() {
+    let timeout = 10
+    const maxTimeout = 1000
 
-const randomNamePicker = {
-    timeout: 10,
-    maxTimeout: 1000,
+    let shuffleNames = () => {}
+    let hideNames = () => {}
 
-    startShuffle() {
-        this.timeout = 10
-        this.shuffleNames()
-    },
+    function initialize() {
+        const nameTextArea = document.getElementById('cbxNames')
+        const startButton = document.getElementById('btnStart')
+        const winnerNameElement = document.getElementById('divWinnerName')
+        const winnerTitleElement = document.getElementById('divWinnerTitle')
 
-    shuffleNames() {
-        const names = document.getElementById('cbxNames').value.split("\n").filter(n => n !== '')
+        shuffleNames = function shuffleNames() {
+            const names = nameTextArea.value.split("\n").filter(n => n !== '')
 
-        if (names.length > 0) {
-            document.getElementById('btnStart').style.visibility = 'hidden'
+            if (names.length > 0) {
+                startButton.style.visibility = 'hidden'
 
-            const index = Math.floor(Math.random() * names.length)
-            const name = document.getElementById('divWinnerName').innerHTML
+                const index = Math.floor(Math.random() * names.length)
+                const name = winnerNameElement.innerHTML
 
-            if (names[index] == '') {
-                this.shuffleNames()
-            } else {
-                if (this.timeout > this.maxTimeout && name != '') {
-                    // display winner
-                    document.getElementById('divWinner').style.visibility = 'visible'
-                    document.getElementById('cbxNames').value = document.getElementById('cbxNames').value.replace(name, '')
-
-                    // display new start button after 5 secs
-                    window.setTimeout(() => {
-                        document.getElementById('btnStart').style.visibility = 'visible';
-                    }, 5000)
+                if (names[index] == '') {
+                    shuffleNames()
                 } else {
-                    document.getElementById('divWinner').style.visibility = 'hidden'
-                    document.getElementById('divWinnerName').innerHTML = names[index]
+                    if (timeout > maxTimeout && name != '') {
+                        // display winner
+                        winnerTitleElement.style.visibility = 'visible'
+                        nameTextArea.value = nameTextArea.value.replace(name, '')
 
-                    // for each run, increase timeout for next name pick, until timeout exceeds maxTimeout, then winner is displayed
-                    this.timeout = Math.round(this.timeout * 1000 / 900)
-                    window.setTimeout(() => this.shuffleNames(), this.timeout)
+                        // display new start button after 5 secs
+                        window.setTimeout(() => {
+                            startButton.style.visibility = 'visible';
+                        }, 5000)
+                    } else {
+                        winnerTitleElement.style.visibility = 'hidden'
+                        winnerNameElement.innerHTML = names[index]
+
+                        // for each run, increase timeout for next name pick, until timeout exceeds maxTimeout, then winner is displayed
+                        timeout = Math.round(timeout * 1000 / 900)
+                        window.setTimeout(shuffleNames, timeout)
+                    }
                 }
             }
         }
-    },
 
-    /**
-     * Hide name textarea and display the "Start" button
-     */
-    hideNames() {
-        document.getElementById('divNames').style.display = 'none'
-        document.getElementById('divTrekning').style.display = 'block'
-        document.getElementById('divWinnerName').innerHTML = ''
-        document.getElementById('divWinner').style.visibility = 'hidden'
-    },
+        hideNames = function hideNames() {
+            document.getElementById('divNames').style.display = 'none'
+            document.getElementById('divTrekning').style.display = 'block'
+            winnerNameElement.innerHTML = ''
+            winnerTitleElement.style.visibility = 'hidden'
+        }
+    }
 
-    showNames() {
-        document.getElementById('divNames').style.display = 'block'
-        document.getElementById('divTrekning').style.display = 'none'
-    },
-}
+    window.addEventListener('DOMContentLoaded', () => initialize())
+
+    const randomNamePicker = {
+        startShuffle() {
+            timeout = 10
+            shuffleNames()
+        },
+
+        /**
+         * Hide name textarea and display the "Start" button
+         */
+        hideNames() {
+            hideNames()
+        },
+
+        showNames() {
+            document.getElementById('divNames').style.display = 'block'
+            document.getElementById('divTrekning').style.display = 'none'
+        },
+    }
+
+    window.randomNamePicker = randomNamePicker
+}())
