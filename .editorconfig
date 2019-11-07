@@ -1,0 +1,8 @@
+[*]
+end_of_line = lf
+tab_width = 4
+indent_style = space
+indent_size = 2
+ij_continuation_indent_size = 4
+
+ij_javascript_force_semicolon_style = false
