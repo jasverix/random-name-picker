@@ -9,35 +9,39 @@
     winnerTitle: null,
   }
 
+  const isEmpty = val => val !== '' && val !== null && val !== void 0
+
   const shuffleNames = () => {
-    const names = elements.nameTextArea.value.split('\n').filter(n => n !== '')
+    const names = elements.nameTextArea.value.split('\n').filter(n => !isEmpty(n))
 
     if (names.length > 0) {
       elements.startButton.style.visibility = 'hidden'
 
       const index = Math.floor(Math.random() * names.length)
-      const name = elements.winnerName.innerHTML
+      const name = names[index]
 
-      if (names[index] === '' || names[index] === null || names[index] === void 0) {
-        shuffleNames()
+      if (timeout > maxTimeout && name !== '') {
+        // display winner
+        elements.winnerName.innerHTML = name
+        elements.winnerTitle.style.visibility = 'visible'
+
+        // remove winner
+        delete names[index]
+
+        // store names back
+        elements.nameTextArea.value = names.filter(n => !isEmpty(n)).join('\n')
+
+        // display new start button after 5 secs
+        window.setTimeout(() => {
+          elements.startButton.style.visibility = 'visible'
+        }, 5000)
       } else {
-        if (timeout > maxTimeout && name !== '') {
-          // display winner
-          elements.winnerTitle.style.visibility = 'visible'
-          elements.nameTextArea.value = elements.nameTextArea.value.replace(name, '') // remove all entries of 'name' from text area
+        elements.winnerTitle.style.visibility = 'hidden'
+        elements.winnerName.innerHTML = name
 
-          // display new start button after 5 secs
-          window.setTimeout(() => {
-            elements.startButton.style.visibility = 'visible'
-          }, 5000)
-        } else {
-          elements.winnerTitle.style.visibility = 'hidden'
-          elements.winnerName.innerHTML = names[index]
-
-          // for each run, increase timeout for next name pick, until timeout exceeds maxTimeout, then winner is displayed
-          timeout = Math.round(timeout * 1000 / 900)
-          window.setTimeout(shuffleNames, timeout)
-        }
+        // for each run, increase timeout for next name pick, until timeout exceeds maxTimeout, then winner is displayed
+        timeout = Math.round(timeout * 1000 / 900)
+        window.setTimeout(shuffleNames, timeout)
       }
     }
   }
