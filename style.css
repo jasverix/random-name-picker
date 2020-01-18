@@ -1,6 +1,7 @@
 body {
   font-family: Arial sans-serif;
-  background: url('background.jpg');
+  background: url('background.jpg') no-repeat;
+  background-size: cover;
 }
 
 h1 {
