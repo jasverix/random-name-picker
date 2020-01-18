@@ -20,24 +20,26 @@
       const index = Math.floor(Math.random() * names.length)
       const name = names[index]
 
+      elements.winnerName.innerHTML = name
+
       if (timeout > maxTimeout && name !== '') {
-        // display winner
-        elements.winnerName.innerHTML = name
-        elements.winnerTitle.style.visibility = 'visible'
-
-        // remove winner
-        delete names[index]
-
-        // store names back
-        elements.nameTextArea.value = names.filter(n => !isEmpty(n)).join('\n')
-
-        // display new start button after 5 secs
         window.setTimeout(() => {
-          elements.startButton.style.visibility = 'visible'
-        }, 5000)
+          // display winner
+          elements.winnerTitle.style.visibility = 'visible'
+
+          // remove winner
+          delete names[index]
+
+          // store names back
+          elements.nameTextArea.value = names.filter(n => !isEmpty(n)).join('\n')
+
+          // display new start button after 5 secs
+          window.setTimeout(() => {
+            elements.startButton.style.visibility = 'visible'
+          }, 5000)
+        }, timeout)
       } else {
         elements.winnerTitle.style.visibility = 'hidden'
-        elements.winnerName.innerHTML = name
 
         // for each run, increase timeout for next name pick, until timeout exceeds maxTimeout, then winner is displayed
         timeout = Math.round(timeout * 1000 / 900)
