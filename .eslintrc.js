@@ -9,8 +9,8 @@ module.exports = {
     '@vue/typescript',
   ],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 'warn',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
     'comma-dangle': ['warn', 'always-multiline'],
   },
   parserOptions: {

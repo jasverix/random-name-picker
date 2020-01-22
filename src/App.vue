@@ -60,14 +60,11 @@ export default class App extends Vue {
   mounted () {
     this.onTitleChanged(this.title)
 
-    console.log('set event on window drop')
-
     window.addEventListener('dragover', ev => {
       ev.preventDefault()
       return false
     })
     window.addEventListener('drop', (ev) => {
-      console.log('drop file')
       ev.preventDefault()
       return false
     })
