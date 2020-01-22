@@ -14,6 +14,11 @@ const routes = [
     name: 'picker',
     component: () => import('@/views/Picker.vue'),
   },
+  {
+    path: '/winners',
+    name: 'winners',
+    component: () => import('@/views/Winners.vue'),
+  },
 ]
 
 const router = new VueRouter({

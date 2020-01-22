@@ -21,6 +21,7 @@ export default class Button extends Vue {
 
 <style lang="scss" scoped>
   a {
+    cursor: pointer;
     display: inline-block;
     background: green;
     font-size: 24pt;

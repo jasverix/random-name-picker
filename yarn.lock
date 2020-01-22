@@ -896,6 +896,11 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.7.tgz#315d570ccb56c53452ff8638738df60726d5b6ea"
   integrity sha512-NYrtPht0wGzhwe9+/idPaBB+TqkY9AhTvOLMkThm0IoEfLaiVQZwBwyJ5puCkO3AUCWrmcoePjp2mbFocKy4SQ==
 
+"@types/mousetrap@^1.6.3":
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.6.3.tgz#3159a01a2b21c9155a3d8f85588885d725dc987d"
+  integrity sha512-13gmo3M2qVvjQrWNseqM3+cR6S2Ss3grbR2NZltgMq94wOwqJYQdgn8qzwDshzgXqMlSUtyPZjysImmktu22ew==
+
 "@types/node@*":
   version "13.1.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.1.8.tgz#1d590429fe8187a02707720ecf38a6fe46ce294b"
@@ -5789,6 +5794,11 @@ mochapack@^1.1.12:
     source-map-support "^0.5.13"
     toposort "^2.0.2"
     yargs "14.0.0"
+
+mousetrap@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.3.tgz#80fee49665fd478bccf072c9d46bdf1bfed3558a"
+  integrity sha512-bd+nzwhhs9ifsUrC2tWaSgm24/oo2c83zaRyZQF06hYA6sANfsXHtnZ19AbbbDXCDzeH5nZBSQ4NvCjgD62tJA==
 
 move-concurrently@^1.0.1:
   version "1.0.1"

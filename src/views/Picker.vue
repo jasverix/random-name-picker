@@ -5,15 +5,9 @@
     </template>
 
     <div>
-      <div>
-        <Button :visible="showStartButton" @click="startShuffle">
-          Start!
-        </Button>
-      </div>
-
-      <div class="winner-name" :style="{ visibility: showWinnerTitle ? 'visible' : 'hidden' }">
+      <WinnerTitle :visible="showWinnerTitle">
         Vinneren er
-      </div>
+      </WinnerTitle>
 
       <div class="person-name">
         {{ selectedName }}
@@ -25,20 +19,22 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
+import Mousetrap from 'mousetrap'
 
 import page from '@/store/page'
 import participants, { isEmpty } from '@/store/participants'
 import Layout from '@/components/Layout.vue'
 import Button from '@/components/Button.vue'
 import { sleep } from '@/utils/sleep'
+import WinnerTitle from '@/components/WinnerTitle.vue'
 
 const MAX_TIMEOUT = 1000
 
 @Component({
-  components: { Button, Layout },
+  components: { WinnerTitle, Button, Layout },
 })
 export default class Picker extends Vue {
-  protected showStartButton: boolean = true
+  protected readyToShuffle: boolean = true
   protected showWinnerTitle: boolean = false
   protected selectedName: string = ''
 
@@ -51,15 +47,49 @@ export default class Picker extends Vue {
     return participants.names
   }
 
-  public mounted () {
+  public mounted (): void {
     if (participants.names.length === 0) {
       this.$router.push({
         name: 'participants',
       })
+
+      return
     }
+
+    window.onbeforeunload = () => 'Do not close!'
+
+    Mousetrap.bind('return', this.startShuffle)
+    Mousetrap.bind('esc', this.goBack)
+    Mousetrap.bind('w', this.gotoWinners)
+  }
+
+  public beforeDestroy () {
+    window.onbeforeunload = null
+
+    Mousetrap.unbind('return')
+    Mousetrap.unbind('esc')
+    Mousetrap.unbind('w')
+  }
+
+  goBack () {
+    if (!this.readyToShuffle) return
+
+    this.$router.push({
+      name: 'participants',
+    })
+  }
+
+  gotoWinners () {
+    if (!this.readyToShuffle) return
+
+    this.$router.push({
+      name: 'winners',
+    })
   }
 
   startShuffle (): void {
+    if (!this.readyToShuffle) return
+
     this.timeout = 10
     this.shuffleNames()
   }
@@ -69,7 +99,7 @@ export default class Picker extends Vue {
     const timeout = this.timeout
 
     if (names.length > 0) {
-      this.showStartButton = false
+      this.readyToShuffle = false
 
       const index = Math.floor(Math.random() * names.length)
       const name = names[index]
@@ -82,11 +112,10 @@ export default class Picker extends Vue {
         this.showWinnerTitle = true
 
         delete names[index]
-
         participants.names = names.filter(n => !isEmpty(n))
+        participants.winners.push(name)
 
-        await sleep(5000)
-        this.showStartButton = true
+        this.readyToShuffle = true
       } else {
         this.showWinnerTitle = false
         this.timeout = Math.round(timeout * 1000 / 900)
@@ -100,14 +129,6 @@ export default class Picker extends Vue {
 </script>
 
 <style lang="scss">
-  div.winner-name {
-    text-align: center;
-    color: orange;
-    font-size: 45pt;
-    font-weight: bold;
-    margin-top: 60px;
-  }
-
   div.person-name {
     text-align: center;
     color: white;

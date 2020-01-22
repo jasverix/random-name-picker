@@ -5,6 +5,16 @@
     </template>
 
     <div>
+      <div class="description">
+        <p style="font-weight: bold; text-align: center">Trykk "Klar" før du viser på storskjerm!</p>
+        <ul>
+          <li>Her er liste med lodd - en linje per lodd (flere lodd, flere linjer med samme navn)</li>
+          <li>Press "Enter" for å starte trekning. Når vinner vises kan man starte neste trekning med "Enter".</li>
+          <li>Press "W" for å vise liste over vinnere.</li>
+          <li>Press "Esc" for å komme tilbake til denne listen (forsiktig så du ikke sender på storskjerm)</li>
+        </ul>
+      </div>
+
       <h2>Deltakere</h2>
 
       <div>
@@ -13,6 +23,10 @@
 
       <div>
         <Button @click="gotoPicker">Klar</Button>
+      </div>
+      <div class="reset-winners" v-if="winners.length > 0">
+        <p>Det er {{ winners.length }} vinnere allerede</p>
+        <Button @click="resetWinners">Tøm vinnere</Button>
       </div>
     </div>
   </Layout>
@@ -34,6 +48,10 @@ export default class Participants extends Vue {
   public page: PageSettings = page
   public namesValue: string = ''
 
+  get winners (): string[] {
+    return participants.winners
+  }
+
   @Watch('namesValue')
   onNamesValueChanged (value: string): void {
     setNameString(value)
@@ -53,6 +71,10 @@ export default class Participants extends Vue {
       name: 'picker',
     })
   }
+
+  protected resetWinners (): void {
+    participants.winners = []
+  }
 }
 </script>
 
@@ -64,5 +86,24 @@ export default class Participants extends Vue {
     width: 400px;
     text-align: left;
     font-size: 14pt;
+  }
+
+  div.description {
+    background: white;
+    text-align: left;
+    width: 800px;
+    border: 1px solid black;
+    font-size: 16pt;
+    margin: 10px auto;
+    padding: 5px;
+  }
+
+  div.reset-winners {
+    border-top: 1px solid yellow;
+
+    p {
+      font-size: 20pt;
+      color: #ff8855;
+    }
   }
 </style>
