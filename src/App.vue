@@ -103,7 +103,7 @@ export default class App extends Vue {
 <style lang="scss">
   * {
     box-sizing: border-box;
-    font-family: Arial sans-serif;
+    font-family: Arial, sans-serif;
   }
 
   body {

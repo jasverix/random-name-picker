@@ -40,7 +40,7 @@ export default class Layout extends Vue {
 
     h1, input[type=text] {
       font-size: 45pt;
-      font-family: Arial sans-serif;
+      font-family: Arial, sans-serif;
       font-weight: bold;
       color: #031b38;
       text-align: center;
