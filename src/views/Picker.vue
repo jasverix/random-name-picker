@@ -43,6 +43,7 @@ export default class Picker extends Vue {
   get title (): string {
     return page.title
   }
+
   get names (): string[] {
     return participants.names
   }
@@ -129,12 +130,12 @@ export default class Picker extends Vue {
 </script>
 
 <style lang="scss">
-  div.person-name {
-    text-align: center;
-    color: white;
-    font-size: 40pt;
-    font-weight: bold;
-    height: 1em;
-    margin-bottom: 160px;
-  }
+div.person-name {
+  text-align: center;
+  color: white;
+  font-size: 40pt;
+  font-weight: bold;
+  height: 1em;
+  margin-bottom: 160px;
+}
 </style>
