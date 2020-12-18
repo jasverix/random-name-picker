@@ -12,7 +12,7 @@ const participants: Participants = Vue.observable({
   winners: [],
 })
 
-export const isEmpty = (val: any): boolean => val === '' || val === null || val === void 0
+export const isEmpty = (val: any): boolean => val === '' || val === null || val === undefined
 
 export const setNameString = debounce((nameString: string) => {
   participants.names = nameString.split('\n').filter(n => !isEmpty(n))
